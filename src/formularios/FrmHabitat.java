@@ -72,7 +72,7 @@ public class FrmHabitat extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
-        jPanel2.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
+        jPanel2.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -140,32 +140,43 @@ public class FrmHabitat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
+    public void limpiarCampos(){
+        txtNombre.setText("");
+        comboClima.setSelectedIndex(0);
+        comboContinentes.setSelectedIndex(0);
+        comboVegetacion.setSelectedIndex(0);
+    }
+    
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         FrmPrincipal main = new FrmPrincipal();
         main.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    public void agregarHabitat() {
+    public boolean agregarHabitat() {
         Habitat habitat = new Habitat();
         if (txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Campo nombre vacio...");
-            return;
+            return false;
         }
         if (comboClima.getSelectedIndex() == 0 || comboContinentes.getSelectedIndex() == 0 || comboVegetacion.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Seleccionar un campo...");
-            return;
+            return false;
         } else {
             habitat.setNombre(txtNombre.getText());
             habitat.setClima(comboClima.getSelectedItem().toString());
             habitat.setContinente(comboContinentes.getSelectedItem().toString());
             habitat.setTipoVegetacion(comboVegetacion.getSelectedItem().toString());
+            fachada.agregarHabitat(habitat);
+            return true;
         }
-        fachada.agregarHabitat(habitat);
     }
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        agregarHabitat();
+        if(agregarHabitat() == true){
+            JOptionPane.showMessageDialog(this, "Habitat Agregado...");
+            limpiarCampos();
+        }
     }//GEN-LAST:event_btnContinuarActionPerformed
   
     
