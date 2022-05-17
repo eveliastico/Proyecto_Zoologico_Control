@@ -240,14 +240,14 @@ public class FrmEspecie extends javax.swing.JFrame {
         modelo2.setRowCount(0);
     }
     
-    public void agregarEspecie(){
+    public boolean agregarEspecie(){
         if(tblEspecieHabitats.getRowCount() == 0){
             JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
-            return;
+            return false;
         }else{
             if(txtNombreCientificoEspecie.getText().isEmpty()||txtNombreVulgarEspecie.getText().isEmpty()||txtDescripcion.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Campo nombre vacio...");
-            return;
+            return false;
             }else{
             especie.setNombreVulgar(txtNombreVulgarEspecie.getText());
             especie.setNombreCientifico(txtNombreCientificoEspecie.getText());
@@ -255,6 +255,7 @@ public class FrmEspecie extends javax.swing.JFrame {
             }
         especie.setHabitats(listaHabitatsAgregados);
         fachada.agregarEspecie(especie);
+        return true;
         }
     }
     
@@ -285,14 +286,17 @@ public class FrmEspecie extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarCamposActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        agregarEspecie();
-        limpiarCampos();
-        JOptionPane.showMessageDialog(this, "Especie Registrada");      
+        if(agregarEspecie() == true){
+            JOptionPane.showMessageDialog(this, "Especie Registrada");
+            limpiarCampos();
+        }else{
+            return;
+        }
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnAgregarHabitatEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarHabitatEspecieActionPerformed
         DefaultTableModel modelo = (DefaultTableModel) this.tblHabitatsRegistrados.getModel();
-        System.out.println((String)tblHabitatsRegistrados.getValueAt(tblHabitatsRegistrados.getSelectedRow(), 0));
+//        System.out.println((String)tblHabitatsRegistrados.getValueAt(tblHabitatsRegistrados.getSelectedRow(), 0));
         listaHabitatsAgregados.add((String)tblHabitatsRegistrados.getValueAt(tblHabitatsRegistrados.getSelectedRow(), 0));
         modelo.removeRow(tblHabitatsRegistrados.getSelectedRow());
         llenarTablaHabitatsEspecies();
@@ -300,7 +304,20 @@ public class FrmEspecie extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarHabitatEspecieActionPerformed
 
     private void btnRemoverHabitatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverHabitatActionPerformed
-        //TODO: BOTON PARA REMOVER UN HABITAT DE LA TABLA.
+        if(tblEspecieHabitats.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }else{
+           DefaultTableModel modelo = (DefaultTableModel) this.tblEspecieHabitats.getModel();
+            DefaultTableModel modelo2 = (DefaultTableModel) this.tblHabitatsRegistrados.getModel();
+            Object[] fila = new Object[1];
+            fila[0] = tblEspecieHabitats.getValueAt(tblEspecieHabitats.getSelectedRow(), 0);
+            listaHabitatsAgregados.remove((String)tblEspecieHabitats.getValueAt(tblEspecieHabitats.getSelectedRow(), 0));
+            modelo.removeRow(tblEspecieHabitats.getSelectedRow());
+            modelo2.addRow(fila);
+            llenarTablaHabitatsEspecies(); 
+        }
+        
     }//GEN-LAST:event_btnRemoverHabitatActionPerformed
 
     /**

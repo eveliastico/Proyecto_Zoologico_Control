@@ -58,7 +58,13 @@ public class FrmItinerario extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblZonasAgregadas = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tblZonas = new javax.swing.JTable();
+        tblGuiasAgregados = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblZonasRegistradas = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblGuiasRegistrados = new javax.swing.JTable();
+        btnAñadirGuia = new javax.swing.JButton();
+        btnRemoverGuia = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -124,13 +130,13 @@ public class FrmItinerario extends javax.swing.JFrame {
         jPanel2.add(btnLimpiarCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, -1, -1));
 
         btnContinuar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnContinuar.setText("Continuar");
+        btnContinuar.setText("Registrar");
         btnContinuar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnContinuarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 320, -1, -1));
+        jPanel2.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 330, -1, -1));
 
         btnAñadirZona.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnAñadirZona.setText("Añadir");
@@ -177,7 +183,34 @@ public class FrmItinerario extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, 160, 210));
 
-        tblZonas.setModel(new javax.swing.table.DefaultTableModel(
+        tblGuiasAgregados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Guias Agregados"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(tblGuiasAgregados);
+
+        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 50, 160, 210));
+
+        tblZonasRegistradas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -200,11 +233,56 @@ public class FrmItinerario extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(tblZonas);
+        jScrollPane5.setViewportView(tblZonasRegistradas);
 
-        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 160, 210));
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, 160, 210));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 840, 360));
+        tblGuiasRegistrados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Guias Registradas"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(tblGuiasRegistrados);
+
+        jPanel2.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 50, 160, 210));
+
+        btnAñadirGuia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnAñadirGuia.setText("Añadir");
+        btnAñadirGuia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirGuiaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnAñadirGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 270, -1, -1));
+
+        btnRemoverGuia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnRemoverGuia.setText("Remover");
+        btnRemoverGuia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverGuiaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnRemoverGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 270, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1200, 370));
 
         jLabel1.setBackground(new java.awt.Color(2, 62, 138));
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -218,11 +296,11 @@ public class FrmItinerario extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 882, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1238, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
         );
 
         pack();
@@ -266,7 +344,7 @@ public class FrmItinerario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnAñadirZonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirZonaActionPerformed
-        String zona = (String)tblZonas.getValueAt(tblZonas.getSelectedRow(), 0);
+        String zona = (String)tblGuiasAgregados.getValueAt(tblGuiasAgregados.getSelectedRow(), 0);
         listaZonasAgregadas.add(zona);
         llenarTablaZonasAgregadas();
     }//GEN-LAST:event_btnAñadirZonaActionPerformed
@@ -274,6 +352,14 @@ public class FrmItinerario extends javax.swing.JFrame {
     private void btnRemoverZonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverZonaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRemoverZonaActionPerformed
+
+    private void btnAñadirGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirGuiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAñadirGuiaActionPerformed
+
+    private void btnRemoverGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverGuiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoverGuiaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,9 +399,11 @@ public class FrmItinerario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Direccion;
+    private javax.swing.JButton btnAñadirGuia;
     private javax.swing.JButton btnAñadirZona;
     private javax.swing.JButton btnContinuar;
     private javax.swing.JButton btnLimpiarCampos;
+    private javax.swing.JButton btnRemoverGuia;
     private javax.swing.JButton btnRemoverZona;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
@@ -328,8 +416,12 @@ public class FrmItinerario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable tblZonas;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable tblGuiasAgregados;
+    private javax.swing.JTable tblGuiasRegistrados;
     private javax.swing.JTable tblZonasAgregadas;
+    private javax.swing.JTable tblZonasRegistradas;
     private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextField txtLongitud;
     private javax.swing.JTextField txtNombreItinerario;
