@@ -30,11 +30,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnCaja = new javax.swing.JButton();
-        btnCliente = new javax.swing.JButton();
-        btnProductos = new javax.swing.JButton();
+        btnHabitat = new javax.swing.JButton();
+        btnEspecie = new javax.swing.JButton();
+        btnItinerario = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
-        btnVentas = new javax.swing.JButton();
+        btnQueja = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Punto de Venta");
@@ -55,35 +55,35 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel1.setOpaque(true);
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 25, 460, 80));
 
-        btnCaja.setBackground(new java.awt.Color(144, 224, 239));
-        btnCaja.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnCaja.setText("CAJA");
-        btnCaja.addActionListener(new java.awt.event.ActionListener() {
+        btnHabitat.setBackground(new java.awt.Color(144, 224, 239));
+        btnHabitat.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnHabitat.setText("Registrar Habitat");
+        btnHabitat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCajaActionPerformed(evt);
+                btnHabitatActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 120, 60));
+        jPanel2.add(btnHabitat, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 170, 60));
 
-        btnCliente.setBackground(new java.awt.Color(144, 224, 239));
-        btnCliente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnCliente.setText("CLIENTES");
-        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnEspecie.setBackground(new java.awt.Color(144, 224, 239));
+        btnEspecie.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnEspecie.setText("Registrar Especie");
+        btnEspecie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClienteActionPerformed(evt);
+                btnEspecieActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 120, 60));
+        jPanel2.add(btnEspecie, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 170, 60));
 
-        btnProductos.setBackground(new java.awt.Color(144, 224, 239));
-        btnProductos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnProductos.setText("PRODUCTOS");
-        btnProductos.addActionListener(new java.awt.event.ActionListener() {
+        btnItinerario.setBackground(new java.awt.Color(144, 224, 239));
+        btnItinerario.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnItinerario.setText("Registrar Itinerario");
+        btnItinerario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProductosActionPerformed(evt);
+                btnItinerarioActionPerformed(evt);
             }
         });
-        jPanel2.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 120, 60));
+        jPanel2.add(btnItinerario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 170, 60));
 
         btnCerrar.setBackground(new java.awt.Color(144, 224, 239));
         btnCerrar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -95,15 +95,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jPanel2.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 100, 40));
 
-        btnVentas.setBackground(new java.awt.Color(144, 224, 239));
-        btnVentas.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnVentas.setText("VENTAS");
-        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+        btnQueja.setBackground(new java.awt.Color(144, 224, 239));
+        btnQueja.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnQueja.setText("Registrar Queja");
+        btnQueja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVentasActionPerformed(evt);
+                btnQuejaActionPerformed(evt);
             }
         });
-        jPanel2.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, 120, 60));
+        jPanel2.add(btnQueja, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, 170, 60));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -112,7 +112,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,29 +128,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCajaActionPerformed
-        FrmEspecie caja = new FrmEspecie();
-        caja.setVisible(true);
+    private void btnHabitatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabitatActionPerformed
+        FrmHabitat frmHabitat = new FrmHabitat();
+        frmHabitat.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnCajaActionPerformed
+    }//GEN-LAST:event_btnHabitatActionPerformed
 
-    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        FrmItinerario frmCliente = new FrmItinerario();
-        frmCliente.setVisible(true);
+    private void btnEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEspecieActionPerformed
+        FrmEspecie frmEspecie = new FrmEspecie();
+        frmEspecie.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnClienteActionPerformed
+    }//GEN-LAST:event_btnEspecieActionPerformed
 
-    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-//        FrmProductos frmProductos = new FrmProductos();
-//        frmProductos.setVisible(true);
-//        this.dispose();
-    }//GEN-LAST:event_btnProductosActionPerformed
+    private void btnItinerarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnItinerarioActionPerformed
+        FrmItinerario frmItinerario = new FrmItinerario();
+        frmItinerario.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnItinerarioActionPerformed
 
-    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-//        FrmVentas frmVentas = new FrmVentas();
-//        frmVentas.setVisible(true);
-//        this.dispose();
-    }//GEN-LAST:event_btnVentasActionPerformed
+    private void btnQuejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuejaActionPerformed
+        FrmQueja frmQueja = new FrmQueja();
+        frmQueja.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnQuejaActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         System.exit(0);
@@ -193,11 +193,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCaja;
     private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton btnCliente;
-    private javax.swing.JButton btnProductos;
-    private javax.swing.JButton btnVentas;
+    private javax.swing.JButton btnEspecie;
+    private javax.swing.JButton btnHabitat;
+    private javax.swing.JButton btnItinerario;
+    private javax.swing.JButton btnQueja;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

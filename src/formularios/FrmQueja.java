@@ -5,10 +5,14 @@
  */
 package formularios;
 
+import Entidades.Itinerario;
 import Entidades.Queja;
 import implementaciones.DAOSFactory;
 import interfaces.IFachada;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -17,13 +21,14 @@ import javax.swing.JOptionPane;
 public class FrmQueja extends javax.swing.JFrame {
 
     IFachada fachada = DAOSFactory.crearFachada();
-    
+    List<Itinerario> listaItinerarios;
+
     /**
      * Creates new form FrmQueja
      */
     public FrmQueja() {
         initComponents();
-        
+        llenarComboItinerarios();
     }
 
     /**
@@ -49,7 +54,7 @@ public class FrmQueja extends javax.swing.JFrame {
         btnContinuar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtQueja = new javax.swing.JTextArea();
-        comboGuia = new javax.swing.JComboBox<>();
+        comboItinerarios = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -74,7 +79,7 @@ public class FrmQueja extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
-        jPanel2.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, -1, -1));
+        jPanel2.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, -1));
 
         Direccion.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         Direccion.setForeground(new java.awt.Color(0, 0, 0));
@@ -101,7 +106,7 @@ public class FrmQueja extends javax.swing.JFrame {
                 btnLimpiarCamposActionPerformed(evt);
             }
         });
-        jPanel2.add(btnLimpiarCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 490, -1, -1));
+        jPanel2.add(btnLimpiarCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, -1, -1));
 
         btnContinuar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnContinuar.setText("Continuar");
@@ -110,23 +115,23 @@ public class FrmQueja extends javax.swing.JFrame {
                 btnContinuarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, -1, -1));
+        jPanel2.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, -1));
 
         txtQueja.setColumns(20);
         txtQueja.setRows(5);
         jScrollPane1.setViewportView(txtQueja);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 360, 140));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 380, 140));
 
-        comboGuia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
-        jPanel2.add(comboGuia, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, 170, -1));
+        comboItinerarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+        jPanel2.add(comboItinerarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, 170, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Nombre:");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 450, 540));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 450, 500));
 
         jLabel1.setBackground(new java.awt.Color(2, 62, 138));
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -144,7 +149,7 @@ public class FrmQueja extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
         );
 
         pack();
@@ -156,27 +161,46 @@ public class FrmQueja extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    public boolean registrarQueja(){
+    public void llenarComboItinerarios() {
+        listaItinerarios = fachada.consultarItinerarios();
+        listaItinerarios.forEach(itinerario -> {
+            comboItinerarios.addItem(itinerario.getNombreItinerario());
+           });
+    }
+
+    public boolean registrarQueja() {
         Queja queja = new Queja();
-        if(txtTelefono.getText().isEmpty()||txtNombre.getText().isEmpty()||txtCorreo.getText().isEmpty()){
+        if (txtTelefono.getText().isEmpty() || txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor llena todos los campos", "Error", JOptionPane.INFORMATION_MESSAGE);
             return false;
-        }else{
+        } else {
             queja.setCorreo(txtCorreo.getText());
             queja.setNombre(txtNombre.getText());
             queja.setTextoQueja(txtQueja.getText());
             queja.setTelefono(txtTelefono.getText());
-            
+            ObjectId idItinerario = listaItinerarios.get(comboItinerarios.getSelectedIndex()).getId();
+            fachada.agregarQuejaItinerario(idItinerario, queja);
             return true;
         }
     }
-    
+
+    public void limpiarCampos() {
+        txtCorreo.setText("");
+        txtNombre.setText("");
+        txtQueja.setText("");
+        txtTelefono.setText("");
+        comboItinerarios.setSelectedIndex(0);
+    }
+
     private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarCamposActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        // TODO add your handling code here:
+        if (registrarQueja() == true) {
+            JOptionPane.showMessageDialog(this, "Queja Registrada");
+            limpiarCampos();
+        }
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     /**
@@ -219,7 +243,7 @@ public class FrmQueja extends javax.swing.JFrame {
     private javax.swing.JButton btnContinuar;
     private javax.swing.JButton btnLimpiarCampos;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox<String> comboGuia;
+    private javax.swing.JComboBox<String> comboItinerarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;

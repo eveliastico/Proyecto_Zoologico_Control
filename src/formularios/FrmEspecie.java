@@ -5,6 +5,7 @@
  */
 package formularios;
 
+import Entidades.Empleado;
 import Entidades.Especie;
 import Entidades.Habitat;
 import implementaciones.DAOSFactory;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.bson.types.ObjectId;
+import validores.Validadores;
 /**
  *
  * @author Jorge
@@ -24,6 +27,8 @@ public class FrmEspecie extends javax.swing.JFrame {
     
     
     List<String> listaHabitatsAgregados = new ArrayList<>();
+    List<Empleado> listaCuidadoresAgregados = new ArrayList<>();
+    Validadores validador = new Validadores();
     
     /**
      * Creates new form FrmEspecie
@@ -31,6 +36,7 @@ public class FrmEspecie extends javax.swing.JFrame {
     public FrmEspecie() {
         initComponents();
         llenarTablaHabitats();
+        llenarTablaCuidadores();
     }
 
     /**
@@ -62,6 +68,13 @@ public class FrmEspecie extends javax.swing.JFrame {
         tblEspecieHabitats = new javax.swing.JTable();
         btnAgregarHabitatEspecie = new javax.swing.JButton();
         btnRemoverHabitat = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblCuidadoresRegistrados = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblCuidadoresAgregados = new javax.swing.JTable();
+        btnRemoverCuidador = new javax.swing.JButton();
+        btnAgregarCuidador = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,6 +90,12 @@ public class FrmEspecie extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Descripcion de la especie:");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, -1, -1));
+
+        txtNombreVulgarEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreVulgarEspecieActionPerformed(evt);
+            }
+        });
         jPanel2.add(txtNombreVulgarEspecie, new org.netbeans.lib.awtextra.AbsoluteConstraints(191, 56, 201, -1));
 
         btnVolver.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -115,7 +134,7 @@ public class FrmEspecie extends javax.swing.JFrame {
                 btnContinuarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 350, -1, -1));
+        jPanel2.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 350, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -124,8 +143,8 @@ public class FrmEspecie extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Habitats:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, -1, -1));
+        jLabel4.setText("Cuidadores:");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 30, -1, -1));
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
@@ -150,9 +169,6 @@ public class FrmEspecie extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tblHabitatsRegistrados);
-        if (tblHabitatsRegistrados.getColumnModel().getColumnCount() > 0) {
-            tblHabitatsRegistrados.getColumnModel().getColumn(0).setResizable(false);
-        }
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 230, 210));
 
@@ -197,7 +213,87 @@ public class FrmEspecie extends javax.swing.JFrame {
         });
         jPanel2.add(btnRemoverHabitat, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 290, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 960, 390));
+        tblCuidadoresRegistrados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Cuidador", "Nombre"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblCuidadoresRegistrados);
+
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 70, 230, 210));
+
+        tblCuidadoresAgregados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Cuidador", "Nombre"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(tblCuidadoresAgregados);
+        if (tblCuidadoresAgregados.getColumnModel().getColumnCount() > 0) {
+            tblCuidadoresAgregados.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        jPanel2.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 70, 230, 210));
+
+        btnRemoverCuidador.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnRemoverCuidador.setText("Remover Cuidador");
+        btnRemoverCuidador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverCuidadorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnRemoverCuidador, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 290, -1, -1));
+
+        btnAgregarCuidador.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnAgregarCuidador.setText("Añadir Cuidador");
+        btnAgregarCuidador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarCuidadorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnAgregarCuidador, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 290, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Habitats:");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 1480, 390));
 
         jLabel1.setBackground(new java.awt.Color(2, 62, 138));
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -211,7 +307,7 @@ public class FrmEspecie extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1500, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,15 +328,28 @@ public class FrmEspecie extends javax.swing.JFrame {
         txtDescripcion.setText("");
         txtNombreCientificoEspecie.setText("");
         txtNombreVulgarEspecie.setText("");
-//        DefaultTableModel modelo = (DefaultTableModel) this.tblHabitatsRegistrados.getModel();
-//        modelo.setColumnCount(1);
-//        modelo.setRowCount(0);
+        DefaultTableModel modelo = (DefaultTableModel) this.tblCuidadoresAgregados.getModel();
+        modelo.setColumnCount(2);
+        modelo.setRowCount(0);
         DefaultTableModel modelo2 = (DefaultTableModel) this.tblEspecieHabitats.getModel();
         listaHabitatsAgregados.clear();
+        listaCuidadoresAgregados.clear();
         modelo2.setColumnCount(1);
         modelo2.setRowCount(0);
         llenarTablaHabitats();
+        llenarTablaCuidadores();
     }
+    
+//    public boolean validaciones(){
+//        if(validador.validaCadena(20, txtDescripcion.getText()) == false || 
+//           validador.validaCadena(20, txtNombreCientificoEspecie.getText()) == false ||
+//           validador.validaCadena(20, txtNombreVulgarEspecie.getText()) == false)
+//        {
+//           return false;
+//        }else{
+//            return true;
+//        }
+//    }
     
     public boolean agregarEspecie(){
         Especie especie = new Especie();
@@ -252,14 +361,44 @@ public class FrmEspecie extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Campo nombre vacio...");
             return false;
             }else{
+            
             especie.setNombreVulgar(txtNombreVulgarEspecie.getText());
             especie.setNombreCientifico(txtNombreCientificoEspecie.getText());
             especie.setDescripcion(txtDescripcion.getText());
             }
-        especie.setHabitats(listaHabitatsAgregados);
+            listaHabitatsAgregados.forEach(habitat -> {
+            especie.addNombreHabitats(habitat);
+            });
+            listaCuidadoresAgregados.forEach(cuidador -> {
+            especie.addIdCuidadores(cuidador.getId());
+            });
+        
         fachada.agregarEspecie(especie);
         return true;
         }
+    }
+    
+    public void llenarTablaCuidadores(){
+        List<Empleado> listaCuidadores = fachada.consultarCuidadores();
+        DefaultTableModel modelo = (DefaultTableModel) this.tblCuidadoresRegistrados.getModel();
+        modelo.setRowCount(0);
+        listaCuidadores.forEach(cuidador -> {
+            Object[] fila = new Object[2];
+            fila[0] = cuidador.getId();
+            fila[1] = cuidador.getNombre();
+            modelo.addRow(fila);
+        });
+    }
+    
+    public void llenarTablaCuidadoresEspecies(){
+        DefaultTableModel modelo = (DefaultTableModel) this.tblCuidadoresAgregados.getModel();
+        modelo.setRowCount(0);
+        listaCuidadoresAgregados.forEach(cuidador -> {
+            Object[] fila = new Object[2];
+            fila[0] = cuidador.getId();
+            fila[1] = cuidador.getNombre();
+            modelo.addRow(fila);
+        });
     }
     
     public void llenarTablaHabitats(){
@@ -298,12 +437,15 @@ public class FrmEspecie extends javax.swing.JFrame {
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnAgregarHabitatEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarHabitatEspecieActionPerformed
-        DefaultTableModel modelo = (DefaultTableModel) this.tblHabitatsRegistrados.getModel();
-//        System.out.println((String)tblHabitatsRegistrados.getValueAt(tblHabitatsRegistrados.getSelectedRow(), 0));
-        listaHabitatsAgregados.add((String)tblHabitatsRegistrados.getValueAt(tblHabitatsRegistrados.getSelectedRow(), 0));
-        modelo.removeRow(tblHabitatsRegistrados.getSelectedRow());
-        llenarTablaHabitatsEspecies();
-        
+        if(tblHabitatsRegistrados.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }else{
+            DefaultTableModel modelo = (DefaultTableModel) this.tblHabitatsRegistrados.getModel();
+            listaHabitatsAgregados.add((String)tblHabitatsRegistrados.getValueAt(tblHabitatsRegistrados.getSelectedRow(), 0));
+            modelo.removeRow(tblHabitatsRegistrados.getSelectedRow());
+            llenarTablaHabitatsEspecies();
+        }
     }//GEN-LAST:event_btnAgregarHabitatEspecieActionPerformed
 
     private void btnRemoverHabitatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverHabitatActionPerformed
@@ -322,6 +464,45 @@ public class FrmEspecie extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnRemoverHabitatActionPerformed
+
+    private void btnRemoverCuidadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverCuidadorActionPerformed
+        Empleado empleado = new Empleado();
+        if(tblCuidadoresAgregados.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }else{
+           DefaultTableModel modelo = (DefaultTableModel) this.tblCuidadoresAgregados.getModel();
+            DefaultTableModel modelo2 = (DefaultTableModel) this.tblCuidadoresRegistrados.getModel();
+            Object[] fila = new Object[2];
+            fila[0] = (ObjectId)tblCuidadoresAgregados.getValueAt(tblCuidadoresAgregados.getSelectedRow(), 0);
+            fila[1] = (String)tblCuidadoresAgregados.getValueAt(tblCuidadoresAgregados.getSelectedRow(), 1);
+            empleado.setId((ObjectId)tblCuidadoresAgregados.getValueAt(tblCuidadoresAgregados.getSelectedRow(), 0));
+            empleado.setNombre((String)tblCuidadoresAgregados.getValueAt(tblCuidadoresAgregados.getSelectedRow(), 1));
+            listaCuidadoresAgregados.remove(empleado);
+            modelo.removeRow(tblCuidadoresAgregados.getSelectedRow());
+            modelo2.addRow(fila);
+            llenarTablaCuidadoresEspecies();
+        }
+    }//GEN-LAST:event_btnRemoverCuidadorActionPerformed
+
+    private void btnAgregarCuidadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCuidadorActionPerformed
+        if(tblCuidadoresRegistrados.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }else{
+            Empleado empleado = new Empleado();
+            DefaultTableModel modelo = (DefaultTableModel) this.tblCuidadoresRegistrados.getModel();
+            empleado.setId((ObjectId)tblCuidadoresRegistrados.getValueAt(tblCuidadoresRegistrados.getSelectedRow(), 0));
+            empleado.setNombre((String)tblCuidadoresRegistrados.getValueAt(tblCuidadoresRegistrados.getSelectedRow(), 1));
+            listaCuidadoresAgregados.add(empleado);
+            modelo.removeRow(tblCuidadoresRegistrados.getSelectedRow());
+            llenarTablaCuidadoresEspecies();
+        }
+    }//GEN-LAST:event_btnAgregarCuidadorActionPerformed
+
+    private void txtNombreVulgarEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreVulgarEspecieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreVulgarEspecieActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,21 +541,28 @@ public class FrmEspecie extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Direccion1;
+    private javax.swing.JButton btnAgregarCuidador;
     private javax.swing.JButton btnAgregarHabitatEspecie;
     private javax.swing.JButton btnContinuar;
     private javax.swing.JButton btnLimpiarCampos;
+    private javax.swing.JButton btnRemoverCuidador;
     private javax.swing.JButton btnRemoverHabitat;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable tblCuidadoresAgregados;
+    private javax.swing.JTable tblCuidadoresRegistrados;
     private javax.swing.JTable tblEspecieHabitats;
     private javax.swing.JTable tblHabitatsRegistrados;
     private javax.swing.JTextArea txtDescripcion;

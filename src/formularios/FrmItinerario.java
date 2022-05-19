@@ -17,6 +17,7 @@ import Entidades.Zona;
 import implementaciones.DAOSFactory;
 import javax.swing.JOptionPane;
 import org.bson.types.ObjectId;
+import validores.Validadores;
 /**
  *
  * @author Jorge
@@ -28,6 +29,8 @@ public class FrmItinerario extends javax.swing.JFrame {
     List<String> listaZonasAgregadas = new ArrayList<>();
     List<Empleado> listaGuiasAgregados = new ArrayList<>();
     List<ObjectId> listaGuiasIds = new ArrayList<>();
+    Validadores validador = new Validadores();
+    
     /**
      * Creates new form FrmEmpleado
      */
@@ -336,7 +339,7 @@ public class FrmItinerario extends javax.swing.JFrame {
         }else{
             if(txtDuracion.getText().isEmpty()||txtLongitud.getText().isEmpty()||
                 txtNombreItinerario.getText().isEmpty()||
-                txtNumEspeciesVisitadas.getText().isEmpty()||txtNumVisitantes.getText().isEmpty())
+                txtNumEspeciesVisitadas.getText().isEmpty()||txtNumVisitantes.getText().isEmpty())   
         {
             JOptionPane.showMessageDialog(this, "Por favor llena todos los campos...");
             return false;
@@ -358,7 +361,29 @@ public class FrmItinerario extends javax.swing.JFrame {
             }
         }
     }
+    
+    public boolean validaFloat(String dato)throws NumberFormatException{
+        try {
+            Float.parseFloat(dato);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
+//    public boolean validaciones(){
+//        if(validador.validaEntero(txtNumVisitantes.getText())==false || validador.validaEntero(txtNumEspeciesVisitadas.getText()) == false){
+//            JOptionPane.showMessageDialog(this, "Por favor ingresa el tipo de dato correcto...");
+//            return false;
+//        }
+//        if(validaFloat(txtDuracion.getText()) == true || validaFloat(txtLongitud.getText())){
+//            JOptionPane.showMessageDialog(this, "Por favor ingresa el tipo de dato correcto...");
+//            return false;
+//        }else{
+//            return true;
+//        }
+//    }
+    
     public void limpiarCampos(){
         txtDuracion.setText("");
         txtLongitud.setText("");
@@ -443,10 +468,16 @@ public class FrmItinerario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnAñadirZonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirZonaActionPerformed
-        DefaultTableModel modelo = (DefaultTableModel) this.tblZonasRegistradas.getModel();
-        listaZonasAgregadas.add((String)tblZonasRegistradas.getValueAt(tblZonasRegistradas.getSelectedRow(), 0));
-        modelo.removeRow(tblZonasRegistradas.getSelectedRow());
-        llenarTablaZonasItinerario();
+        if(tblZonasRegistradas.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }else{
+            DefaultTableModel modelo = (DefaultTableModel) this.tblZonasRegistradas.getModel();
+            listaZonasAgregadas.add((String)tblZonasRegistradas.getValueAt(tblZonasRegistradas.getSelectedRow(), 0));
+            modelo.removeRow(tblZonasRegistradas.getSelectedRow());
+            llenarTablaZonasItinerario();
+        }
+        
     }//GEN-LAST:event_btnAñadirZonaActionPerformed
 
     private void btnRemoverZonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverZonaActionPerformed
@@ -467,13 +498,18 @@ public class FrmItinerario extends javax.swing.JFrame {
 
     //METODO QUE AGREGA GUIAS A UNA LISTA DONDE SERAN AÑADIDOS A LA COLECCION.
     private void btnAñadirGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirGuiaActionPerformed
-        DefaultTableModel modelo = (DefaultTableModel) this.tblGuiasRegistrados.getModel();
-        Empleado empleado = new Empleado();
-        empleado.setId((ObjectId)tblGuiasRegistrados.getValueAt(tblGuiasRegistrados.getSelectedRow(), 0));
-        empleado.setNombre((String)tblGuiasRegistrados.getValueAt(tblGuiasRegistrados.getSelectedRow(), 1));
-        listaGuiasAgregados.add(empleado);
-        modelo.removeRow(tblGuiasRegistrados.getSelectedRow());
-        llenarTablaGuiasItinerario();
+        if(tblGuiasRegistrados.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }else{
+            DefaultTableModel modelo = (DefaultTableModel) this.tblGuiasRegistrados.getModel();
+            Empleado empleado = new Empleado();
+            empleado.setId((ObjectId)tblGuiasRegistrados.getValueAt(tblGuiasRegistrados.getSelectedRow(), 0));
+            empleado.setNombre((String)tblGuiasRegistrados.getValueAt(tblGuiasRegistrados.getSelectedRow(), 1));
+            listaGuiasAgregados.add(empleado);
+            modelo.removeRow(tblGuiasRegistrados.getSelectedRow());
+            llenarTablaGuiasItinerario();
+        }
     }//GEN-LAST:event_btnAñadirGuiaActionPerformed
 
     private void btnRemoverGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverGuiaActionPerformed
@@ -482,7 +518,6 @@ public class FrmItinerario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla Itinerario porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
             return;
         }else{
-            System.out.println(listaGuiasAgregados.size());
             DefaultTableModel modelo = (DefaultTableModel) this.tblGuiasAgregados.getModel();
             DefaultTableModel modelo2 = (DefaultTableModel) this.tblGuiasRegistrados.getModel();
             Object[] fila = new Object[2];
