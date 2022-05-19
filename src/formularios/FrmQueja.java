@@ -209,7 +209,7 @@ public class FrmQueja extends javax.swing.JFrame {
             return false;
         }
         if (txtTelefono.getText().isEmpty() || txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor llena todos los campos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor llena todos los campos de texto", "Error", JOptionPane.INFORMATION_MESSAGE);
             return false;
         } else {
             queja.setCorreo(txtCorreo.getText());

@@ -159,8 +159,16 @@ public class FrmHabitat extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Campo nombre vacio...");
             return false;
         }
-        if (comboClima.getSelectedIndex() == 0 || comboContinentes.getSelectedIndex() == 0 || comboVegetacion.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccionar un campo...");
+        if(comboContinentes.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Por favor selecciona un continente...");
+            return false;
+        }
+        if(comboVegetacion.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Por favor selecciona un tipo de vegetacion...");
+            return false;
+        }
+        if (comboClima.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor selecciona un tipo de clima...");
             return false;
         } else {
             habitat.setNombre(txtNombre.getText());
