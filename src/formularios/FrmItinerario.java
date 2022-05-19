@@ -333,6 +333,10 @@ public class FrmItinerario extends javax.swing.JFrame {
 
     public boolean registrarItinerario(){
         Itinerario itinerario = new Itinerario();
+        if(validacionFloat() == false ||validacionInt() == false){
+            JOptionPane.showMessageDialog(this, "Por favor ingresa el tipo de dato correcto...");
+            return false;
+        }
         if(tblGuiasAgregados.getRowCount() == 0 || tblZonasAgregadas.getRowCount() == 0){
             JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
             return false;
@@ -371,18 +375,22 @@ public class FrmItinerario extends javax.swing.JFrame {
         }
     }
 
-//    public boolean validaciones(){
-//        if(validador.validaEntero(txtNumVisitantes.getText())==false || validador.validaEntero(txtNumEspeciesVisitadas.getText()) == false){
-//            JOptionPane.showMessageDialog(this, "Por favor ingresa el tipo de dato correcto...");
-//            return false;
-//        }
-//        if(validaFloat(txtDuracion.getText()) == true || validaFloat(txtLongitud.getText())){
-//            JOptionPane.showMessageDialog(this, "Por favor ingresa el tipo de dato correcto...");
-//            return false;
-//        }else{
-//            return true;
-//        }
-//    }
+    public boolean validacionInt(){
+        if(validador.validaEntero(txtNumVisitantes.getText())== false || validador.validaEntero(txtNumEspeciesVisitadas.getText()) == false){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    public boolean validacionFloat(){
+        if(validaFloat(txtDuracion.getText()) == false || validaFloat(txtLongitud.getText()) == false){
+            JOptionPane.showMessageDialog(this, "Por favor ingresa el tipo de dato correcto...");
+            return false;
+        }else{
+            return true;
+        }
+    }
     
     public void limpiarCampos(){
         txtDuracion.setText("");

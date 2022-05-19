@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.bson.types.ObjectId;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import validores.Validadores;
 
 /**
  *
@@ -22,6 +25,7 @@ public class FrmQueja extends javax.swing.JFrame {
 
     IFachada fachada = DAOSFactory.crearFachada();
     List<Itinerario> listaItinerarios;
+    Validadores validador = new Validadores();
 
     /**
      * Creates new form FrmQueja
@@ -155,6 +159,29 @@ public class FrmQueja extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public boolean validacionInt(){
+        if(validador.validaEntero(txtTelefono.getText())== false){
+            JOptionPane.showMessageDialog(null, "El campo telefono es erroneo", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
+    public boolean validarCorreo(){
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(txtCorreo.getText());
+        if (mather.find() == true) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "El correo electronico es invalido", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+    
+    }
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         FrmPrincipal main = new FrmPrincipal();
         main.setVisible(true);
@@ -170,6 +197,17 @@ public class FrmQueja extends javax.swing.JFrame {
 
     public boolean registrarQueja() {
         Queja queja = new Queja();
+        
+        if(validacionInt() == false){
+            return false;
+        }
+        if(validarCorreo() == false){
+            return false;
+        }
+        if(comboItinerarios.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Por favor selecciona un itinerario", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
         if (txtTelefono.getText().isEmpty() || txtNombre.getText().isEmpty() || txtCorreo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor llena todos los campos", "Error", JOptionPane.INFORMATION_MESSAGE);
             return false;
@@ -193,7 +231,7 @@ public class FrmQueja extends javax.swing.JFrame {
     }
 
     private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
-        // TODO add your handling code here:
+        limpiarCampos();
     }//GEN-LAST:event_btnLimpiarCamposActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed

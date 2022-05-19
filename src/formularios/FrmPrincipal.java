@@ -50,7 +50,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(0, 119, 182));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("                 PUNTO DE VENTA");
+        jLabel1.setText("                      ZOOLOGICO");
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel1.setOpaque(true);
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 25, 460, 80));
