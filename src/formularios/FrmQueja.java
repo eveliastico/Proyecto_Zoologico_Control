@@ -76,7 +76,7 @@ public class FrmQueja extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Seleccione el guia:");
+        jLabel6.setText("Seleccione el itinerario:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, -1, -1));
         jPanel2.add(txtNumeroEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 280, -1));
 
