@@ -216,7 +216,7 @@ public class FrmQueja extends javax.swing.JFrame {
             queja.setNombre(txtNombre.getText());
             queja.setTextoQueja(txtQueja.getText());
             queja.setTelefono(txtTelefono.getText());
-            ObjectId idItinerario = listaItinerarios.get(comboItinerarios.getSelectedIndex()).getId();
+            ObjectId idItinerario = listaItinerarios.get(comboItinerarios.getSelectedIndex()-1).getId();
             fachada.agregarQuejaItinerario(idItinerario, queja);
             return true;
         }
