@@ -24,7 +24,7 @@ import org.bson.types.ObjectId;
 public class FrmItinerario extends javax.swing.JFrame {
 
     IFachada fachada = DAOSFactory.crearFachada();
-    Itinerario itinerario = new Itinerario();
+    
     List<String> listaZonasAgregadas = new ArrayList<>();
     List<Empleado> listaGuiasAgregados = new ArrayList<>();
     List<ObjectId> listaGuiasIds = new ArrayList<>();
@@ -329,6 +329,7 @@ public class FrmItinerario extends javax.swing.JFrame {
 
 
     public boolean registrarItinerario(){
+        Itinerario itinerario = new Itinerario();
         if(tblGuiasAgregados.getRowCount() == 0 || tblZonasAgregadas.getRowCount() == 0){
             JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
             return false;
@@ -345,6 +346,9 @@ public class FrmItinerario extends javax.swing.JFrame {
             itinerario.setNombreItinerario(txtNombreItinerario.getText());
             itinerario.setNumEspecies(Integer.parseInt(txtNumEspeciesVisitadas.getText()));
             itinerario.setZonas(listaZonasAgregadas);
+                for (int i = 0; i < listaGuiasAgregados.size(); i++) {
+                    System.out.println("GUIAS: "+listaGuiasAgregados.get(i).getId()+"  Nombre"+listaGuiasAgregados.get(i).getNombre());
+                }
             listaGuiasAgregados.forEach(guia -> {
                 listaGuiasIds.add(guia.getId());
             }); 
@@ -384,7 +388,7 @@ public class FrmItinerario extends javax.swing.JFrame {
         List<Empleado> listaGuias = fachada.consultarGuias();
         DefaultTableModel modelo = (DefaultTableModel) this.tblGuiasRegistrados.getModel();
         modelo.setRowCount(0);
-        listaGuias.forEach(guia -> {
+            listaGuias.forEach(guia -> {
             Object[] fila = new Object[2];
             fila[0] = guia.getId();
             fila[1] = guia.getNombre();
@@ -425,7 +429,7 @@ public class FrmItinerario extends javax.swing.JFrame {
     }
     
     private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
-        // TODO add your handling code here:
+        limpiarCampos();
     }//GEN-LAST:event_btnLimpiarCamposActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed

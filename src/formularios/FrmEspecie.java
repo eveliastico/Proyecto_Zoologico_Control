@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class FrmEspecie extends javax.swing.JFrame {
 
     IFachada fachada = DAOSFactory.crearFachada();
-    Especie especie = new Especie();
+    
     
     List<String> listaHabitatsAgregados = new ArrayList<>();
     
@@ -232,15 +232,18 @@ public class FrmEspecie extends javax.swing.JFrame {
         txtDescripcion.setText("");
         txtNombreCientificoEspecie.setText("");
         txtNombreVulgarEspecie.setText("");
-        DefaultTableModel modelo = (DefaultTableModel) this.tblHabitatsRegistrados.getModel();
-        modelo.setColumnCount(1);
-        modelo.setRowCount(0);
+//        DefaultTableModel modelo = (DefaultTableModel) this.tblHabitatsRegistrados.getModel();
+//        modelo.setColumnCount(1);
+//        modelo.setRowCount(0);
         DefaultTableModel modelo2 = (DefaultTableModel) this.tblEspecieHabitats.getModel();
+        listaHabitatsAgregados.clear();
         modelo2.setColumnCount(1);
         modelo2.setRowCount(0);
+        llenarTablaHabitats();
     }
     
     public boolean agregarEspecie(){
+        Especie especie = new Especie();
         if(tblEspecieHabitats.getRowCount() == 0){
             JOptionPane.showMessageDialog(null, "Selecciona un campo de la tabla porfavor", "Error", JOptionPane.INFORMATION_MESSAGE);
             return false;

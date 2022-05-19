@@ -5,17 +5,25 @@
  */
 package formularios;
 
+import Entidades.Queja;
+import implementaciones.DAOSFactory;
+import interfaces.IFachada;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jorge
  */
 public class FrmQueja extends javax.swing.JFrame {
 
+    IFachada fachada = DAOSFactory.crearFachada();
+    
     /**
      * Creates new form FrmQueja
      */
     public FrmQueja() {
         initComponents();
+        
     }
 
     /**
@@ -32,15 +40,15 @@ public class FrmQueja extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
         Direccion = new javax.swing.JLabel();
-        txtCalleEmpleado = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtNumeroEmpleado = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtTelefonoEmpleado = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
         btnLimpiarCampos = new javax.swing.JButton();
         btnContinuar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtQueja = new javax.swing.JTextArea();
         comboGuia = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -71,20 +79,20 @@ public class FrmQueja extends javax.swing.JFrame {
         Direccion.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         Direccion.setForeground(new java.awt.Color(0, 0, 0));
         Direccion.setText("Telefono:");
-        jPanel2.add(Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
-        jPanel2.add(txtCalleEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 280, -1));
+        jPanel2.add(Direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        jPanel2.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 280, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Seleccione el itinerario:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, -1, -1));
-        jPanel2.add(txtNumeroEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 280, -1));
+        jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 280, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Correo:");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 80, -1));
-        jPanel2.add(txtTelefonoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 280, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 80, -1));
+        jPanel2.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 280, -1));
 
         btnLimpiarCampos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnLimpiarCampos.setText("Limpiar Campos");
@@ -104,9 +112,9 @@ public class FrmQueja extends javax.swing.JFrame {
         });
         jPanel2.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, -1, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtQueja.setColumns(20);
+        txtQueja.setRows(5);
+        jScrollPane1.setViewportView(txtQueja);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 360, 140));
 
@@ -116,7 +124,7 @@ public class FrmQueja extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Nombre:");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 450, 540));
 
@@ -148,6 +156,21 @@ public class FrmQueja extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    public boolean registrarQueja(){
+        Queja queja = new Queja();
+        if(txtTelefono.getText().isEmpty()||txtNombre.getText().isEmpty()||txtCorreo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor llena todos los campos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else{
+            queja.setCorreo(txtCorreo.getText());
+            queja.setNombre(txtNombre.getText());
+            queja.setTextoQueja(txtQueja.getText());
+            queja.setTelefono(txtTelefono.getText());
+            
+            return true;
+        }
+    }
+    
     private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarCamposActionPerformed
@@ -205,9 +228,9 @@ public class FrmQueja extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField txtCalleEmpleado;
-    private javax.swing.JTextField txtNumeroEmpleado;
-    private javax.swing.JTextField txtTelefonoEmpleado;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextArea txtQueja;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
